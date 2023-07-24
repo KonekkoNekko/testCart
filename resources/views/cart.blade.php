@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <!-- Your head section content -->
-</head>
-
-<body>
+@section('content')
     <div class="container">
 
         {{ $cartContent }}
@@ -36,10 +31,13 @@
                             <td>{{ $item->name }}</td>
                             <td>Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
                             <td>
-                                <form action="{{ route('cart.update', ['rowId' => $item->rowId]) }}" method="post">
+                                <form action="{{ route('cart.update', ['rowId' => $item->rowId]) }}" method="post" class="updateForm">
                                     @csrf
-                                    <input type="number" name="quantity" value="{{ $item->qty }}" min="1">
-                                    <button type="submit">Update</button>
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-secondary minusBtn" type="button">-</button>
+                                        <input type="number" class="form-control quantityInput" name="quantity" value="{{ $item->qty }}" min="0">
+                                        <button class="btn btn-outline-secondary plusBtn" type="button">+</button>
+                                    </div>
                                 </form>
                             </td>
                             <td>Rp. {{ number_format($item->subtotal, 0, ',', '.') }}</td>
@@ -64,10 +62,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <form action="{{ route('cart.store') }}" method="POST">
-                            @csrf
-                            <button type="submit">Store Cart</button>
-                        </form>
+                        <a href="{{ route('product') }}" class="btn btn-primary">Produk</a>
+                        <a href="{{ route('cart.show') }}" class="btn btn-primary">Cart</a>
                     </tr>
                 </tfoot>
             </table>
@@ -75,6 +71,38 @@
             <p>Your cart is empty.</p>
         @endif
     </div>
-</body>
+    <script>
+        // Get all the elements with the specified classes
+        const quantityInputs = document.querySelectorAll('.quantityInput');
+        const minusButtons = document.querySelectorAll('.minusBtn');
+        const plusButtons = document.querySelectorAll('.plusBtn');
 
-</html>
+        // Loop through each row and add event listeners to buttons
+        for (let i = 0; i < minusButtons.length; i++) {
+            minusButtons[i].addEventListener('click', function () {
+                updateQuantity(quantityInputs[i], -1);
+            });
+
+            plusButtons[i].addEventListener('click', function () {
+                updateQuantity(quantityInputs[i], 1);
+            });
+        }
+
+        // Function to update the quantity and submit the form
+        function updateQuantity(quantityInput, change) {
+            // Calculate the updated quantity
+            let updatedQuantity = parseInt(quantityInput.value) + change;
+
+            // Ensure the input value is non-negative
+            if (updatedQuantity < 0) {
+                updatedQuantity = 0;
+            }
+
+            // Update the input value
+            quantityInput.value = updatedQuantity;
+
+            // Submit the form with the updated quantity
+            quantityInput.closest('.updateForm').submit();
+        }
+    </script>
+@endsection

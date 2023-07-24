@@ -20,6 +20,7 @@
                         <p><strong>{{ __('Email:') }}</strong> {{ auth()->user()->email }}</p>
                         <p><strong>{{ __('Username:') }}</strong> {{ auth()->user()->username }}</p>
                         <a href="{{ route('product') }}" class="btn btn-primary">Produk</a>
+                        <a href="{{ route('cart.show') }}" class="btn btn-primary">Cart</a>
                     @else
                         <p>{{ __('You are not logged in.') }}</p>
                     @endauth

@@ -15,7 +15,7 @@ class CartController extends Controller
         $identifier = Auth::check() ? Auth::user()->username : 'guest';
 
         // Restore the cart from the database (if exists) before showing the cart
-        Cart::instance($identifier)->restore($identifier);
+        // Cart::instance($identifier)->restore($identifier);
 
         $cartContent = Cart::instance($identifier)->content();
 
@@ -40,32 +40,32 @@ class CartController extends Controller
         Cart::instance($identifier)->update($rowId, $request->quantity);
 
         // Store the cart in the database after updating the quantity
-        Cart::instance($identifier)->store($identifier);
+        // Cart::instance($identifier)->store($identifier);
 
         return redirect()->back()->with('success', 'Cart updated successfully.');
     }
 
-    public function storeCart(Request $request)
-    {
-        // Use the username if logged in, 'guest' if not
-        $identifier = Auth::check() ? Auth::user()->username : 'guest';
+    // public function storeCart(Request $request)
+    // {
+    //     // Use the username if logged in, 'guest' if not
+    //     $identifier = Auth::check() ? Auth::user()->username : 'guest';
 
-        // Store the cart in the database
-        Cart::instance($identifier)->store($identifier);
+    //     // Store the cart in the database
+    //     Cart::instance($identifier)->store($identifier);
 
-        return redirect()->back()->with('success', 'Cart stored successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Cart stored successfully.');
+    // }
 
-    public function restoreCart(Request $request)
-    {
-        // Use the username if logged in, 'guest' if not
-        $identifier = Auth::check() ? Auth::user()->username : 'guest';
+    // public function restoreCart(Request $request)
+    // {
+    //     // Use the username if logged in, 'guest' if not
+    //     $identifier = Auth::check() ? Auth::user()->username : 'guest';
 
-        // Restore the cart from the database
-        Cart::instance($identifier)->restore($identifier);
+    //     // Restore the cart from the database
+    //     Cart::instance($identifier)->restore($identifier);
 
-        return redirect()->back()->with('success', 'Cart restored successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Cart restored successfully.');
+    // }
 
     public function destroyCart()
     {
@@ -75,7 +75,7 @@ class CartController extends Controller
         Cart::instance($identifier)->destroy();
 
         // Store the cart in the database after destroying it
-        Cart::instance($identifier)->store($identifier);
+        // Cart::instance($identifier)->store($identifier);
 
         return redirect()->back()->with('success', 'Cart destroyed successfully.');
     }
