@@ -11,7 +11,7 @@
 
 <body>
     <div class="container justify-content-between mt-5">
-        <p>Total of the items you bought: {{ Cart::instance(auth()->user()->username)->count() }}</p>
+        <p>Total of the items you bought: {{ Cart::instance(auth()->user()->name)->count() }}</p>
         <div class="row mx-3 p-5">
             @foreach ($products as $product)
                 <div class="col-md-4 my-3">

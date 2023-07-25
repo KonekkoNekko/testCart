@@ -12,7 +12,7 @@ class CartController extends Controller
     public function showCart()
     {
         // Use the username if logged in, 'guest' if not
-        $identifier = Auth::check() ? Auth::user()->username : 'guest';
+        $identifier = auth()->user()->name;
 
         // Restore the cart from the database (if exists) before showing the cart
         // Cart::instance($identifier)->restore($identifier);
@@ -25,7 +25,7 @@ class CartController extends Controller
     public function deleteItem(Request $request, $rowId)
     {
         // Use the username if logged in, 'guest' if not
-        $identifier = Auth::check() ? Auth::user()->username : 'guest';
+        $identifier = auth()->user()->name;
 
         Cart::instance($identifier)->remove($rowId);
 
@@ -35,7 +35,7 @@ class CartController extends Controller
     public function updateQuantity(Request $request, $rowId)
     {
         // Use the username if logged in, 'guest' if not
-        $identifier = Auth::check() ? Auth::user()->username : 'guest';
+        $identifier = auth()->user()->name;
 
         Cart::instance($identifier)->update($rowId, $request->quantity);
 
@@ -45,32 +45,10 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Cart updated successfully.');
     }
 
-    // public function storeCart(Request $request)
-    // {
-    //     // Use the username if logged in, 'guest' if not
-    //     $identifier = Auth::check() ? Auth::user()->username : 'guest';
-
-    //     // Store the cart in the database
-    //     Cart::instance($identifier)->store($identifier);
-
-    //     return redirect()->back()->with('success', 'Cart stored successfully.');
-    // }
-
-    // public function restoreCart(Request $request)
-    // {
-    //     // Use the username if logged in, 'guest' if not
-    //     $identifier = Auth::check() ? Auth::user()->username : 'guest';
-
-    //     // Restore the cart from the database
-    //     Cart::instance($identifier)->restore($identifier);
-
-    //     return redirect()->back()->with('success', 'Cart restored successfully.');
-    // }
-
     public function destroyCart()
     {
         // Use the username if logged in, 'guest' if not
-        $identifier = Auth::check() ? Auth::user()->username : 'guest';
+        $identifier = auth()->user()->name;
 
         Cart::instance($identifier)->destroy();
 

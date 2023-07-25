@@ -22,7 +22,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         // Use the username if logged in, 'guest' if not
-        $identifier = auth()->check() ? auth()->user()->username : 'guest';
+        $identifier = auth()->user()->name;
 
         Cart::instance($identifier)->add([
             'id' => $product->id,

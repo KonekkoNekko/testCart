@@ -24,7 +24,7 @@ class LoginListener
     {
         //
         // Use the username if logged in, 'guest' if not
-        $identifier = auth()->user()->username;
+        $identifier = auth()->user()->name;
 
         // Store the cart in the database
         Cart::instance($identifier)->restore($identifier);
